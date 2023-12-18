@@ -1,0 +1,76 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Local configuration file (uncomment if needed)
+# myconfig.ini
+
+# Environment-specific files
+.env
+venv/
+ENV/
+
+# Compiled Python files
+*.pyc
+*.pyo
+*.pyd
+
+# Python log files
+*.log
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+
+# PyInstaller
+dist/
+build/
+
+# Unit test / coverage reports
+htmlcov/
+.coverage
+.tox/
+
+# Translations
+*.mo
+
+# Django
+*.pyc
+*.db
+*.sqlite3
+*.log
+*.pot
+*.pyc
+__pycache__/
+
+# Flask
+instance/
+.webassets-cache
+
+# Scrapy
+.scrapy
+
+# Sphinx documentation
+docs/_build/
+
+# PyBuilder
+target/
+
+# IPython
+profile_default/
+ipython_config.py
+
+# PyUp
+pyup.json
+
+# pipenv
+Pipfile.lock
+Pipfile
