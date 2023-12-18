@@ -10,4 +10,3 @@ Strategy Pattern
 
 Observer Pattern
 ----------------
-
