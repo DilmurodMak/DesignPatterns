@@ -26,3 +26,15 @@ Decorator - attaches additional responsibilities to an object dynamically. Decor
 1) Classes should be open for extension, but closed for modification.
 
 
+Factory Pattern
+-----------------
+
+Abstract Factory - Provides an interface for creating families of related or dependent objects without
+specifying their concrete classes.
+
+Factory Method - Defines an interface for creating an object, but let subclasses decide which class to instantiate. Factory Method lets a class defer instantiation to the
+subclasses.
+
+1) Depend upon abstractions. Do not depend upon concrete classes.
+
+
