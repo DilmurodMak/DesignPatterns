@@ -1,21 +1,29 @@
 from abc import ABC, abstractmethod
 
 
-# Abstract Pizza
+# Pizza Interfaces
 class Pizza(ABC):
-    def __init__(self):
-        self.name = ""
-        self.dough = ""
-        self.sauce = ""
-        self.toppings = []
-
+    @abstractmethod
     def prepare(self):
-        print(f"Preparing {self.name}")
-        print("Tossing dough...")
-        print("Adding sauce...")
-        print("Adding toppings:")
-        for topping in self.toppings:
-            print(f"   {topping}")
+        pass
+
+    @abstractmethod
+    def bake(self):
+        pass
+
+    @abstractmethod
+    def cut(self):
+        pass
+
+    @abstractmethod
+    def box(self):
+        pass
+
+
+# Concrete Pizza Products
+class NYStyleCheesePizza(Pizza):
+    def prepare(self):
+        print("Preparing NY Style Cheese Pizza")
 
     def bake(self):
         print("Bake for 25 minutes at 350")
@@ -27,53 +35,49 @@ class Pizza(ABC):
         print("Place pizza in official PizzaStore box")
 
 
-# Concrete Pizza Products
-class NYStyleCheesePizza(Pizza):
-    def __init__(self):
-        super().__init__()
-        self.name = "NY Style Cheese Pizza"
-        self.dough = "Thin Crust Dough"
-        self.sauce = "Marinara Sauce"
-        self.toppings = ["Grated Reggiano Cheese"]
-
-
 class NYStylePepperoniPizza(Pizza):
-    def __init__(self):
-        super().__init__()
-        self.name = "NY Style Pepperoni Pizza"
-        self.dough = "Thin Crust Dough"
-        self.sauce = "Marinara Sauce"
-        self.toppings = ["Grated Reggiano Cheese", "Pepperoni"]
+    def prepare(self):
+        print("Preparing NY Style Pepperoni Pizza")
+
+    def bake(self):
+        print("Bake for 25 minutes at 350")
+
+    def cut(self):
+        print("Cutting the pizza into diagonal slices")
+
+    def box(self):
+        print("Place pizza in official PizzaStore box")
 
 
 class ChicagoStyleCheesePizza(Pizza):
-    def __init__(self):
-        super().__init__()
-        self.name = "Chicago Style Cheese Pizza"
-        self.dough = "Thick Crust Dough"
-        self.sauce = "Plum Tomato Sauce"
-        self.toppings = ["Shredded Mozzarella Cheese"]
+    def prepare(self):
+        print("Preparing Chicago Style Cheese Pizza")
+
+    def bake(self):
+        print("Bake for 40 minutes at 350")
 
     def cut(self):
         print("Cutting the pizza into square slices")
+
+    def box(self):
+        print("Place pizza in official PizzaStore box")
 
 
 class ChicagoStylePepperoniPizza(Pizza):
-    def __init__(self):
-        super().__init__()
-        self.name = "Chicago Style Pepperoni Pizza"
-        self.dough = "Thick Crust Dough"
-        self.sauce = "Plum Tomato Sauce"
-        self.toppings = ["Shredded Mozzarella Cheese", "Pepperoni"]
+    def prepare(self):
+        print("Preparing Chicago Style Pepperoni Pizza")
 
     def bake(self):
-        print("Bake for 35 minutes at 350")
+        print("Bake for 40 minutes at 350")
 
     def cut(self):
         print("Cutting the pizza into square slices")
 
+    def box(self):
+        print("Place pizza in official PizzaStore box")
 
-# Abstract PizzaStore
+
+# PizzaStore Interfaces
 class PizzaStore(ABC):
     @abstractmethod
     def create_pizza(self, pizza_type):
@@ -96,7 +100,7 @@ class NYPizzaStore(PizzaStore):
         elif pizza_type == "pepperoni":
             return NYStylePepperoniPizza()
         else:
-            return "Error: Invalid type of pizza"
+            raise ValueError("Error: Invalid type of pizza")
 
 
 class ChicagoPizzaStore(PizzaStore):
@@ -106,7 +110,7 @@ class ChicagoPizzaStore(PizzaStore):
         elif pizza_type == "pepperoni":
             return ChicagoStylePepperoniPizza()
         else:
-            return "Error: Invalid type of pizza"
+            raise ValueError("Error: Invalid type of pizza")
 
 
 # Client
