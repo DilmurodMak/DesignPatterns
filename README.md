@@ -50,3 +50,7 @@ subclasses.
 Singleton Pattern
 -----------------
 
+![Singleton Pattern](./Images/5_singleton_pattern.png)
+
+Singleton - ensures a class has only one instance, and provides a global point of access to it.
+
