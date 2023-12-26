@@ -46,3 +46,6 @@ subclasses.
 1) Depend upon abstractions. Do not depend upon concrete classes.
 
 
+Singleton Pattern
+-----------------
+
