@@ -6,6 +6,10 @@ class Command(ABC):
     def execute(self):
         pass
 
+    @abstractmethod
+    def undo(self):
+        pass
+
 
 class Light:
     def __init__(self, location):
@@ -25,6 +29,9 @@ class LightOnCommand(Command):
     def execute(self):
         self.light.on()
 
+    def undo(self):
+        self.light.off()
+
 
 class LightOffCommand(Command):
     def __init__(self, light):
@@ -32,6 +39,9 @@ class LightOffCommand(Command):
 
     def execute(self):
         self.light.off()
+
+    def undo(self):
+        self.light.on()
 
 
 class GarageDoor:
@@ -49,6 +59,9 @@ class GarageDoorOpenCommand(Command):
     def execute(self):
         self.garageDoor.up()
 
+    def undo(self):
+        self.garageDoor.down()
+
 
 class GarageDoorCloseCommand(Command):
     def __init__(self, garageDoor):
@@ -56,6 +69,9 @@ class GarageDoorCloseCommand(Command):
 
     def execute(self):
         self.garageDoor.down()
+
+    def undo(self):
+        self.garageDoor.up()
 
 
 class Stereo:
@@ -73,6 +89,9 @@ class StereoOnWithCDCommand(Command):
     def execute(self):
         self.stereo.on()
 
+    def undo(self):
+        self.stereo.off()
+
 
 class StereoOffCommand(Command):
     def __init__(self, stereo):
@@ -81,40 +100,133 @@ class StereoOffCommand(Command):
     def execute(self):
         self.stereo.off()
 
+    def undo(self):
+        self.stereo.on()
+
 
 class CeilingFan:
-    def on(self):
-        print("Ceiling fan is on")
+    HIGH = 3
+    MEDIUM = 2
+    LOW = 1
+    OFF = 0
+
+    def __init__(self, location):
+        self.location = location
+        self.speed = self.OFF
+
+    def high(self):
+        self.speed = self.HIGH
+        print(f"{self.location} ceiling fan is on high")
+
+    def medium(self):
+        self.speed = self.MEDIUM
+        print(f"{self.location} ceiling fan is on medium")
+
+    def low(self):
+        self.speed = self.LOW
+        print(f"{self.location} ceiling fan is on low")
+
+    def getSpeed(self):
+        return self.speed
 
     def off(self):
-        print("Ceiling fan is off")
+        self.speed = self.OFF
+        print(f"{self.location} ceiling fan is off")
 
 
-class CeilingFanOnCommand(Command):
+class CeilingFanHighCommand(Command):
     def __init__(self, ceilingFan):
         self.ceilingFan = ceilingFan
+        self.prevSpeed = 0
 
     def execute(self):
-        self.ceilingFan.on()
+        self.prevSpeed = self.ceilingFan.getSpeed()
+        self.ceilingFan.high()
+
+    def undo(self):
+        if self.prevSpeed == CeilingFan.HIGH:
+            self.ceilingFan.high()
+        elif self.prevSpeed == CeilingFan.MEDIUM:
+            self.ceilingFan.medium()
+        elif self.prevSpeed == CeilingFan.LOW:
+            self.ceilingFan.low()
+        elif self.prevSpeed == CeilingFan.OFF:
+            self.ceilingFan.off()
+
+
+class CeilingFanMediumCommand(Command):
+    def __init__(self, ceilingFan):
+        self.ceilingFan = ceilingFan
+        self.prevSpeed = 0
+
+    def execute(self):
+        self.prevSpeed = self.ceilingFan.getSpeed()
+        self.ceilingFan.medium()
+
+    def undo(self):
+        if self.prevSpeed == CeilingFan.HIGH:
+            self.ceilingFan.high()
+        elif self.prevSpeed == CeilingFan.MEDIUM:
+            self.ceilingFan.medium()
+        elif self.prevSpeed == CeilingFan.LOW:
+            self.ceilingFan.low()
+        elif self.prevSpeed == CeilingFan.OFF:
+            self.ceilingFan.off()
+
+
+class CeilingFanLowCommand(Command):
+    def __init__(self, ceilingFan):
+        self.ceilingFan = ceilingFan
+        self.prevSpeed = 0
+
+    def execute(self):
+        self.ceilingFan.low()
+        self.prevSpeed = self.ceilingFan.getSpeed()
+
+    def undo(self):
+        if self.prevSpeed == CeilingFan.HIGH:
+            self.ceilingFan.high()
+        elif self.prevSpeed == CeilingFan.MEDIUM:
+            self.ceilingFan.medium()
+        elif self.prevSpeed == CeilingFan.LOW:
+            self.ceilingFan.low()
+        elif self.prevSpeed == CeilingFan.OFF:
+            self.ceilingFan.off()
 
 
 class CeilingFanOffCommand(Command):
     def __init__(self, ceilingFan):
         self.ceilingFan = ceilingFan
+        self.prevSpeed = 0
 
     def execute(self):
+        self.prevSpeed = self.ceilingFan.getSpeed()
         self.ceilingFan.off()
+
+    def undo(self):
+        if self.prevSpeed == CeilingFan.HIGH:
+            self.ceilingFan.high()
+        elif self.prevSpeed == CeilingFan.MEDIUM:
+            self.ceilingFan.medium()
+        elif self.prevSpeed == CeilingFan.LOW:
+            self.ceilingFan.low()
+        elif self.prevSpeed == CeilingFan.OFF:
+            self.ceilingFan.off()
 
 
 class NoCommand(Command):
     def execute(self):
         print("No command assigned")
 
+    def undo(self):
+        pass
+
 
 class RemoteControl:
     def __init__(self):
         self.onCommands = [NoCommand() for _ in range(7)]
         self.offCommands = [NoCommand() for _ in range(7)]
+        self.undoCommand = NoCommand()
 
     def setCommand(self, slot, onCommand, offCommand):
         self.onCommands[slot] = onCommand
@@ -122,9 +234,14 @@ class RemoteControl:
 
     def onButtonWasPushed(self, slot):
         self.onCommands[slot].execute()
+        self.undoCommand = self.onCommands[slot]
 
     def offButtonWasPushed(self, slot):
         self.offCommands[slot].execute()
+        self.undoCommand = self.offCommands[slot]
+
+    def undoButtonWasPushed(self):
+        self.undoCommand.undo()
 
     def __str__(self):
         result = "\n------ Remote Control ------\n"
@@ -142,17 +259,25 @@ if __name__ == "__main__":
     light = Light("Living Room")
     garageDoor = GarageDoor()
     stereo = Stereo()
-    fan = CeilingFan()
+    fan = CeilingFan("Living Room")
 
     remote.setCommand(0, LightOnCommand(light), LightOffCommand(light))
-    remote.setCommand(1, GarageDoorOpenCommand(garageDoor), GarageDoorCloseCommand(garageDoor))
+    remote.setCommand(
+        1, GarageDoorOpenCommand(garageDoor), GarageDoorCloseCommand(garageDoor)
+    )
     remote.setCommand(2, StereoOnWithCDCommand(stereo), StereoOffCommand(stereo))
-    remote.setCommand(3, CeilingFanOnCommand(fan), CeilingFanOffCommand(fan))
-
-    print(str(remote))
+    remote.setCommand(3, CeilingFanHighCommand(fan), CeilingFanOffCommand(fan))
+    remote.setCommand(4, CeilingFanMediumCommand(fan), CeilingFanOffCommand(fan))
 
     remote.onButtonWasPushed(0)
     remote.offButtonWasPushed(0)
+
+    print(str(remote))
+    remote.undoButtonWasPushed()
+    remote.offButtonWasPushed(0)
+    remote.onButtonWasPushed(0)
+    print(str(remote))
+    remote.undoButtonWasPushed()
 
     remote.onButtonWasPushed(1)
     remote.offButtonWasPushed(1)
@@ -161,4 +286,6 @@ if __name__ == "__main__":
     remote.offButtonWasPushed(2)
 
     remote.onButtonWasPushed(3)
+    remote.onButtonWasPushed(4)
+    remote.undoButtonWasPushed()
     remote.offButtonWasPushed(3)
