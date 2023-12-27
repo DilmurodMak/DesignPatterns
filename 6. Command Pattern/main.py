@@ -214,6 +214,19 @@ class CeilingFanOffCommand(Command):
             self.ceilingFan.off()
 
 
+class MacroCommand(Command):
+    def __init__(self, commands):
+        self.commands = commands
+
+    def execute(self):
+        for command in self.commands:
+            command.execute()
+
+    def undo(self):
+        for command in reversed(self.commands):
+            command.undo()
+
+
 class NoCommand(Command):
     def execute(self):
         print("No command assigned")
@@ -261,6 +274,17 @@ if __name__ == "__main__":
     stereo = Stereo()
     fan = CeilingFan("Living Room")
 
+    partyOnMacro = MacroCommand(
+        [
+            LightOnCommand(light),
+            StereoOnWithCDCommand(stereo),
+            CeilingFanHighCommand(fan),
+        ]
+    )
+    partyOffMacro = MacroCommand(
+        [LightOffCommand(light), StereoOffCommand(stereo), CeilingFanOffCommand(fan)]
+    )
+
     remote.setCommand(0, LightOnCommand(light), LightOffCommand(light))
     remote.setCommand(
         1, GarageDoorOpenCommand(garageDoor), GarageDoorCloseCommand(garageDoor)
@@ -268,6 +292,7 @@ if __name__ == "__main__":
     remote.setCommand(2, StereoOnWithCDCommand(stereo), StereoOffCommand(stereo))
     remote.setCommand(3, CeilingFanHighCommand(fan), CeilingFanOffCommand(fan))
     remote.setCommand(4, CeilingFanMediumCommand(fan), CeilingFanOffCommand(fan))
+    remote.setCommand(5, partyOnMacro, partyOffMacro)
 
     remote.onButtonWasPushed(0)
     remote.offButtonWasPushed(0)
@@ -289,3 +314,6 @@ if __name__ == "__main__":
     remote.onButtonWasPushed(4)
     remote.undoButtonWasPushed()
     remote.offButtonWasPushed(3)
+
+    remote.onButtonWasPushed(5)
+    remote.offButtonWasPushed(5)
