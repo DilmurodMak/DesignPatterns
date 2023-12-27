@@ -54,3 +54,12 @@ Singleton Pattern
 
 Singleton - ensures a class has only one instance, and provides a global point of access to it.
 
+
+Command Pattern
+-----------------
+
+![Command Pattern](./Images/6_command_pattern.png)
+
+Command - encapsulates a request as an object, thereby letting you parameterize clients with different requests, queue or log requests, and support undoable operations.
+
+
