@@ -62,4 +62,21 @@ Command Pattern
 
 Command - encapsulates a request as an object, thereby letting you parameterize clients with different requests, queue or log requests, and support undoable operations.
 
+Adapter and Facade Pattern
+-----------------
 
+![Adapter Pattern](./Images/7_adapter_pattern.png)
+![Facade Pattern](./Images/7_facade_pattern.png)
+
+Adapter - converts the interface of a class into another interface the clients expect. Adapter lets classes work together that couldn’t otherwise because of incompatible interfaces.
+
+Pattern | Intent
+--- | ---
+Decorator | Attach additional responsibilities to an object dynamically. Decorators provide a flexible alternative to subclassing for extending functionality.
+Adapter | Convert the interface of a class into another interface clients expect. Adapter lets classes work together that couldn’t otherwise because of incompatible interfaces.
+Facade | Provide a unified interface to a set of interfaces in a subsystem. Facade defines a higher-level interface that makes the subsystem easier to use.
+
+Design Principle:
+- Principle of Lease Knowledge: Talk only to your immediate friends.
+  
+This principle prevents us from creating designs that have a large number of classes coupled together so that changes in one part of the system cascade to other parts.
