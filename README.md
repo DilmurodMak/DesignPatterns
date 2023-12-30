@@ -80,3 +80,21 @@ Design Principle:
 - Principle of Lease Knowledge: Talk only to your immediate friends.
   
 This principle prevents us from creating designs that have a large number of classes coupled together so that changes in one part of the system cascade to other parts.
+
+Template Method Pattern
+-----------------
+
+![Template Method Pattern](./Images/8_template_method_pattern.png)
+![Hollywood Principle](./Images/8_hollywood_principle.png)
+
+Template Method - defines the skeleton of an algorithm in a method, deferring some steps to subclasses. Template Method lets subclasses redefine certain steps of an algorithm without changing the algorithm’s structure.
+
+Hollywood Principle: Don’t call us, we’ll call you.
+
+With the Template Method, we allow low-level components to hook themselves into a system, but the high-level components determine when they are needed, and how.
+
+Patterns | Description
+--- | ---
+Template Method | Defines the skeleton of an algorithm in a method, deferring some steps to subclasses. Template Method lets subclasses redefine certain steps of an algorithm without changing the algorithm’s structure.
+Strategy | Defines a family of algorithms, encapsulates each one, and makes them interchangeable. Strategy lets the algorithm vary independently from clients that use it.
+Factory Method | Defines an interface for creating an object, but let subclasses decide which class to instantiate. Factory Method lets a class defer instantiation to the subclasses.
