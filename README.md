@@ -106,6 +106,8 @@ Iterator and Composite Pattern
 
 Iterator - provides a way to access the elements of an aggregate object sequentially without exposing its underlying representation.
 
+Composite - compose objects into tree structures to represent part-whole hierarchies. Composite lets clients treat individual objects and compositions of objects uniformly.
+
 Design Principle: A Class should have only one reason to change.
 
 Cohesion - is a term that is used to indicate how focused and single-minded a class is. A class with high cohesion has a single purpose or responsibility and the class is well-focused on that purpose. A class with low cohesion has many purposes or responsibilities and is not focused on just one purpose.
