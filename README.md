@@ -1,4 +1,14 @@
+<!-- omit in toc -->
 # Design Principles 
+- [Strategy Pattern](#strategy-pattern)
+- [Observer Pattern](#observer-pattern)
+- [Decorator Pattern](#decorator-pattern)
+- [Factory Pattern](#factory-pattern)
+- [Singleton Pattern](#singleton-pattern)
+- [Command Pattern](#command-pattern)
+- [Adapter and Facade Pattern](#adapter-and-facade-pattern)
+- [Template Method Pattern](#template-method-pattern)
+- [Iterator and Composite Pattern](#iterator-and-composite-pattern)
 
 Strategy Pattern
 ----------------
