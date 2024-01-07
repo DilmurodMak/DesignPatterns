@@ -103,6 +103,7 @@ Iterator and Composite Pattern
 -----------------
 
 ![Iterator Pattern](./Images/9_itterator_and_composite_pattern.png)
+![Composite Pattern](./Images/9_itterator_composite_b.png)
 
 Iterator - provides a way to access the elements of an aggregate object sequentially without exposing its underlying representation.
 
