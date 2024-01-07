@@ -31,6 +31,10 @@ class MenuComponent(ABC):
     def create_iterator(self):
         pass
 
+    @abstractmethod
+    def print_item(self):
+        pass
+
 
 class MenuItem(MenuComponent):
     def __init__(self, name, description, vegetarian, price):
@@ -59,6 +63,15 @@ class MenuItem(MenuComponent):
 
     def create_iterator(self):
         raise NotImplementedError("Iterator not supported for MenuItem")
+
+    def print_item(self):
+        print(
+            self.get_name(),
+            ", ",
+            self.get_price(),
+            " -- ",
+            self.get_description(),
+        )
 
 
 class Iterator(ABC):
@@ -129,40 +142,125 @@ class Menu(MenuComponent):
     def create_iterator(self):
         return CompositeIterator(self.menu_components)
 
+    def print_item(self):
+        print(f"\n{self.get_name()}, {self.get_description()}")
+        print("---------------------")
+
+        for menu_component in self.menu_components:
+            menu_component.print_item()
+
 
 class PancakeHouseMenu(Menu):
     def __init__(self):
         super().__init__("Pancake House Menu", "Breakfast items")
-        self.add_item(MenuItem("K&B's Pancake Breakfast", "Pancakes with scrambled eggs, and toast", True, 2.99))
-        self.add_item(MenuItem("Regular Pancake Breakfast", "Pancakes with fried eggs, sausage", False, 2.99))
-        self.add_item(MenuItem("Blueberry Pancakes", "Pancakes made with fresh blueberries", True, 3.49))
-        self.add_item(MenuItem("Waffles", "Waffles, with your choice of blueberries or strawberries", True, 3.59))
+        self.add_item(
+            MenuItem(
+                "K&B's Pancake Breakfast",
+                "Pancakes with scrambled eggs, and toast",
+                True,
+                2.99,
+            )
+        )
+        self.add_item(
+            MenuItem(
+                "Regular Pancake Breakfast",
+                "Pancakes with fried eggs, sausage",
+                False,
+                2.99,
+            )
+        )
+        self.add_item(
+            MenuItem(
+                "Blueberry Pancakes", "Pancakes made with fresh blueberries", True, 3.49
+            )
+        )
+        self.add_item(
+            MenuItem(
+                "Waffles",
+                "Waffles, with your choice of blueberries or strawberries",
+                True,
+                3.59,
+            )
+        )
 
     def create_iterator(self):
         return CompositeIterator(self.menu_components)
+
+    def print_item(self):
+        super().print_item()
 
 
 class DinerMenu(Menu):
     def __init__(self):
         super().__init__("Diner Menu", "Lunch items")
-        self.add_item(MenuItem("Vegetarian BLT", "(Fakin') Bacon with lettuce & tomato on whole wheat", True, 2.99))
-        self.add_item(MenuItem("BLT", "Bacon with lettuce & tomato on whole wheat", False, 2.99))
-        self.add_item(MenuItem("Soup of the day", "Soup of the day, with a side of potato salad", False, 3.29))
-        self.add_item(MenuItem("Hotdog", "A hot dog, with sauerkraut, relish, onions, topped with cheese", False, 3.05))
+        self.add_item(
+            MenuItem(
+                "Vegetarian BLT",
+                "(Fakin') Bacon with lettuce & tomato on whole wheat",
+                True,
+                2.99,
+            )
+        )
+        self.add_item(
+            MenuItem("BLT", "Bacon with lettuce & tomato on whole wheat", False, 2.99)
+        )
+        self.add_item(
+            MenuItem(
+                "Soup of the day",
+                "Soup of the day, with a side of potato salad",
+                False,
+                3.29,
+            )
+        )
+        self.add_item(
+            MenuItem(
+                "Hotdog",
+                "A hot dog, with sauerkraut, relish, onions, topped with cheese",
+                False,
+                3.05,
+            )
+        )
 
     def create_iterator(self):
         return CompositeIterator(self.menu_components)
+
+    def print_item(self):
+        super().print_item()
 
 
 class CafeMenu(Menu):
     def __init__(self):
         super().__init__("Cafe Menu", "Dinner items")
-        self.add_item(MenuItem("Veggie Burger and Air Fries", "Veggie burger on a whole wheat bun, lettuce, tomato, and fries", True, 3.99))
-        self.add_item(MenuItem("Soup of the day", "A cup of the soup of the day, with a side salad", False, 3.69))
-        self.add_item(MenuItem("Burrito", "A large burrito, with whole pinto beans, salsa, guacamole", True, 4.29))
+        self.add_item(
+            MenuItem(
+                "Veggie Burger and Air Fries",
+                "Veggie burger on a whole wheat bun, lettuce, tomato, and fries",
+                True,
+                3.99,
+            )
+        )
+        self.add_item(
+            MenuItem(
+                "Soup of the day",
+                "A cup of the soup of the day, with a side salad",
+                False,
+                3.69,
+            )
+        )
+        self.add_item(
+            MenuItem(
+                "Burrito",
+                "A large burrito, with whole pinto beans, salsa, guacamole",
+                True,
+                4.29,
+            )
+        )
 
     def create_iterator(self):
         return CompositeIterator(self.menu_components)
+
+    def print_item(self):
+        super().print_item()
 
 
 class Waitress:
@@ -178,13 +276,7 @@ class Waitress:
     def __print_menu(self, iterator):
         while iterator.has_next():
             menu_item = iterator.next()
-            print(
-                menu_item.get_name(),
-                ", ",
-                menu_item.get_price(),
-                " -- ",
-                menu_item.get_description(),
-            )
+            menu_item.print_item()
 
 
 if __name__ == "__main__":
