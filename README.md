@@ -20,6 +20,8 @@ Strategy - defines a family of algorithms, encapsulates each one, and makes them
 1) Identify the aspects of your application that vary and separate them from what stays the same.
 2) Program to an interface, not an implementation.
 3) Favor composition over inheritance.
+   
+[Duck Simulator Code Sample](./1.%20Strategy%20Pattern/MiniDuckSimulator.py)
 
 
 Observer Pattern
@@ -31,6 +33,8 @@ Observer - defines a one-to-many dependency between objects so that when one obj
 
 1) Strive for loosely coupled designs between objects that interact.
 
+[Weather Station Code Sample](./2.%20Observer%20Pattern/main.py)
+
 
 Decorator Pattern
 -----------------
@@ -41,6 +45,7 @@ Decorator - attaches additional responsibilities to an object dynamically. Decor
 
 1) Classes should be open for extension, but closed for modification.
 
+[Starbuzz Coffee Code Sample](./3.%20Decorator%20Pattern/main.py)
 
 Factory Pattern
 -----------------
@@ -56,6 +61,7 @@ subclasses.
 
 1) Depend upon abstractions. Do not depend upon concrete classes.
 
+[Pizza Factory Code Sample](./4.%20Factory%20Pattern/main.py)
 
 Singleton Pattern
 -----------------
@@ -64,6 +70,7 @@ Singleton Pattern
 
 Singleton - ensures a class has only one instance, and provides a global point of access to it.
 
+[Chocolate Boiler Code Sample](./5.%20Singleton%20Pattern/main.py)
 
 Command Pattern
 -----------------
@@ -71,6 +78,8 @@ Command Pattern
 ![Command Pattern](./Images/6_command_pattern.png)
 
 Command - encapsulates a request as an object, thereby letting you parameterize clients with different requests, queue or log requests, and support undoable operations.
+
+[Remote Control Code Sample](./6.%20Command%20Pattern/main.py)
 
 Adapter and Facade Pattern
 -----------------
@@ -91,6 +100,10 @@ Design Principle:
   
 This principle prevents us from creating designs that have a large number of classes coupled together so that changes in one part of the system cascade to other parts.
 
+[Duck Adapter Code Sample](./7.%20Adapter%20and%20Facade%20Patterns/adapter.py)
+
+[Home Theatre Facade Code Sample](./7.%20Adapter%20and%20Facade%20Patterns/facade.py)
+
 Template Method Pattern
 -----------------
 
@@ -109,6 +122,8 @@ Template Method | Defines the skeleton of an algorithm in a method, deferring so
 Strategy | Defines a family of algorithms, encapsulates each one, and makes them interchangeable. Strategy lets the algorithm vary independently from clients that use it.
 Factory Method | Defines an interface for creating an object, but let subclasses decide which class to instantiate. Factory Method lets a class defer instantiation to the subclasses.
 
+[Caffeine Beverage Code Sample](./8.%20Template%20Method%20Pattern/main.py)
+
 Iterator and Composite Pattern
 -----------------
 
@@ -122,3 +137,5 @@ Composite - compose objects into tree structures to represent part-whole hierarc
 Design Principle: A Class should have only one reason to change.
 
 Cohesion - is a term that is used to indicate how focused and single-minded a class is. A class with high cohesion has a single purpose or responsibility and the class is well-focused on that purpose. A class with low cohesion has many purposes or responsibilities and is not focused on just one purpose.
+
+[Restaurant Menu Code Sample](./9.%20Itterator%20and%20Composite%20Pattern/itterator.py)
