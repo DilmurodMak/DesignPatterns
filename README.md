@@ -1,5 +1,5 @@
 <!-- omit in toc -->
-# Design Principles 
+# Design Patterns 
 - [Strategy Pattern](#strategy-pattern)
 - [Observer Pattern](#observer-pattern)
 - [Decorator Pattern](#decorator-pattern)
