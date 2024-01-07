@@ -1,7 +1,38 @@
 from abc import ABC, abstractmethod
 
 
-class MenuItem:
+# Component interface
+class MenuComponent(ABC):
+    @abstractmethod
+    def get_name(self):
+        pass
+
+    @abstractmethod
+    def get_description(self):
+        pass
+
+    @abstractmethod
+    def get_price(self):
+        pass
+
+    @abstractmethod
+    def is_vegetarian(self):
+        pass
+
+    @abstractmethod
+    def add_item(self, menu_component):
+        pass
+
+    @abstractmethod
+    def remove_item(self, menu_component):
+        pass
+
+    @abstractmethod
+    def create_iterator(self):
+        pass
+
+
+class MenuItem(MenuComponent):
     def __init__(self, name, description, vegetarian, price):
         self.name = name
         self.description = description
@@ -19,6 +50,15 @@ class MenuItem:
 
     def is_vegetarian(self):
         return self.vegetarian
+
+    def add_item(self, menu_component):
+        raise NotImplementedError("Cannot add item to MenuItem")
+
+    def remove_item(self, menu_component):
+        raise NotImplementedError("Cannot remove item from MenuItem")
+
+    def create_iterator(self):
+        raise NotImplementedError("Iterator not supported for MenuItem")
 
 
 class Iterator(ABC):
@@ -39,7 +79,7 @@ class Iterator(ABC):
         pass
 
 
-class PancakeHouseMenuIterator(Iterator):
+class CompositeIterator(Iterator):
     def has_next(self):
         return self.position < len(self.menu_items)
 
@@ -59,175 +99,81 @@ class PancakeHouseMenuIterator(Iterator):
             self.menu_items[len(self.menu_items) - 1] = None
 
 
-class DinerMenuIterator(Iterator):
-    def has_next(self):
-        return self.position < len(self.menu_items)
+class Menu(MenuComponent):
+    def __init__(self, name, description):
+        self.name = name
+        self.description = description
+        self.menu_components = []
 
-    def next(self):
-        menu_item = self.menu_items[self.position]
-        self.position += 1
-        return menu_item
+    def get_name(self):
+        return self.name
 
-    def remove(self):
-        if self.position <= 0:
-            raise Exception(
-                "You can't remove an item until you've done at least one next()"
-            )
-        if self.menu_items[self.position - 1] is not None:
-            for i in range(self.position - 1, len(self.menu_items) - 1):
-                self.menu_items[i] = self.menu_items[i + 1]
-            self.menu_items[len(self.menu_items) - 1] = None
+    def get_description(self):
+        return self.description
 
+    def get_price(self):
+        raise NotImplementedError("Price not applicable for Menu")
 
-class CafeMenuIterator(Iterator):
-    def has_next(self):
-        return self.position < len(self.menu_items)
+    def is_vegetarian(self):
+        raise NotImplementedError("Vegetarian status not applicable for Menu")
 
-    def next(self):
-        menu_item = self.menu_items[self.position]
-        self.position += 1
-        return menu_item
-
-    def remove(self):
-        if self.position <= 0:
-            raise Exception(
-                "You can't remove an item until you've done at least one next()"
-            )
-        if self.menu_items[self.position - 1] is not None:
-            for i in range(self.position - 1, len(self.menu_items) - 1):
-                self.menu_items[i] = self.menu_items[i + 1]
-            self.menu_items[len(self.menu_items) - 1] = None
-
-
-class PancakeHouseMenu:
-    def __init__(self):
-        self.menu_items = []
-        self.add_item(
-            "K&B's Pancake Breakfast",
-            "Pancakes with scrambled eggs, and toast",
-            True,
-            2.99,
-        )
-        self.add_item(
-            "Regular Pancake Breakfast",
-            "Pancakes with fried eggs, sausage",
-            False,
-            2.99,
-        )
-        self.add_item(
-            "Blueberry Pancakes",
-            "Pancakes made with fresh blueberries",
-            True,
-            3.49,
-        )
-        self.add_item(
-            "Waffles",
-            "Waffles, with your choice of blueberries or strawberries",
-            True,
-            3.59,
-        )
-
-    def add_item(self, name, description, vegetarian, price):
-        self.menu_items.append(MenuItem(name, description, vegetarian, price))
-
-    def create_iterator(self):
-        return CafeMenuIterator(self.menu_items)
+    def add_item(self, menu_component):
+        self.menu_components.append(menu_component)
 
     def remove_item(self, name):
-        for i, item in enumerate(self.menu_items):
-            if item.get_name() == name:
-                self.menu_items.pop(i)
-                break
-
-
-class DinerMenu:
-    def __init__(self):
-        self.menu_items = []
-        self.add_item(
-            "Vegetarian BLT",
-            "(Fakin') Bacon with lettuce & tomato on whole wheat",
-            True,
-            2.99,
-        )
-        self.add_item("BLT", "Bacon with lettuce & tomato on whole wheat", False, 2.99)
-        self.add_item(
-            "Soup of the day",
-            "Soup of the day, with a side of potato salad",
-            False,
-            3.29,
-        )
-        self.add_item(
-            "Hotdog",
-            "A hot dog, with sauerkraut, relish, onions, topped with cheese",
-            False,
-            3.05,
-        )
-
-    def add_item(self, name, description, vegetarian, price):
-        self.menu_items.append(MenuItem(name, description, vegetarian, price))
+        for menu_component in self.menu_components:
+            if menu_component.get_name() == name:
+                self.menu_components.remove(menu_component)
+                return
 
     def create_iterator(self):
-        return DinerMenuIterator(self.menu_items)
-
-    def remove_item(self, name):
-        for i, item in enumerate(self.menu_items):
-            if item.get_name() == name:
-                self.menu_items.pop(i)
-                break
+        return CompositeIterator(self.menu_components)
 
 
-class CafeMenu(MenuItem):
+class PancakeHouseMenu(Menu):
     def __init__(self):
-        self.menu_items = []
-        self.add_item(
-            "Veggies Burger andAir Fries",
-            "Veggies burger on a whole wheat bun, lettuce, tomato, and fries",
-            True,
-            3.99,
-        )
-        self.add_item(
-            "Soup of the day",
-            "A cup of the soup of the day, with a side salad",
-            False,
-            3.69,
-        )
-        self.add_item(
-            "Burrito",
-            "A large burrito, with whole pinto beans, salsa, guacamole",
-            True,
-            4.99,
-        )
-
-    def add_item(self, name, description, vegetarian, price):
-        self.menu_items.append(MenuItem(name, description, vegetarian, price))
+        super().__init__("Pancake House Menu", "Breakfast items")
+        self.add_item(MenuItem("K&B's Pancake Breakfast", "Pancakes with scrambled eggs, and toast", True, 2.99))
+        self.add_item(MenuItem("Regular Pancake Breakfast", "Pancakes with fried eggs, sausage", False, 2.99))
+        self.add_item(MenuItem("Blueberry Pancakes", "Pancakes made with fresh blueberries", True, 3.49))
+        self.add_item(MenuItem("Waffles", "Waffles, with your choice of blueberries or strawberries", True, 3.59))
 
     def create_iterator(self):
-        return CafeMenuIterator(self.menu_items)
+        return CompositeIterator(self.menu_components)
 
-    def remove_item(self, name):
-        for i, item in enumerate(self.menu_items):
-            if item.get_name() == name:
-                self.menu_items.pop(i)
-                break
+
+class DinerMenu(Menu):
+    def __init__(self):
+        super().__init__("Diner Menu", "Lunch items")
+        self.add_item(MenuItem("Vegetarian BLT", "(Fakin') Bacon with lettuce & tomato on whole wheat", True, 2.99))
+        self.add_item(MenuItem("BLT", "Bacon with lettuce & tomato on whole wheat", False, 2.99))
+        self.add_item(MenuItem("Soup of the day", "Soup of the day, with a side of potato salad", False, 3.29))
+        self.add_item(MenuItem("Hotdog", "A hot dog, with sauerkraut, relish, onions, topped with cheese", False, 3.05))
+
+    def create_iterator(self):
+        return CompositeIterator(self.menu_components)
+
+
+class CafeMenu(Menu):
+    def __init__(self):
+        super().__init__("Cafe Menu", "Dinner items")
+        self.add_item(MenuItem("Veggie Burger and Air Fries", "Veggie burger on a whole wheat bun, lettuce, tomato, and fries", True, 3.99))
+        self.add_item(MenuItem("Soup of the day", "A cup of the soup of the day, with a side salad", False, 3.69))
+        self.add_item(MenuItem("Burrito", "A large burrito, with whole pinto beans, salsa, guacamole", True, 4.29))
+
+    def create_iterator(self):
+        return CompositeIterator(self.menu_components)
 
 
 class Waitress:
-    def __init__(self, pancake_house_menu, diner_menu, cafe_menu):
-        self.pancake_house_menu = pancake_house_menu
-        self.diner_menu = diner_menu
-        self.cafe_menu = cafe_menu
+    def __init__(self, menus):
+        self.menus = menus
 
     def print_menu(self):
-        pancake_house_menu_iterator = self.pancake_house_menu.create_iterator()
-        diner_menu_iterator = self.diner_menu.create_iterator()
-        cafe_menu_iterator = self.cafe_menu.create_iterator()
-
-        print("MENU\n----\nBREAKFAST")
-        self.__print_menu(pancake_house_menu_iterator)
-        print("\nLUNCH")
-        self.__print_menu(diner_menu_iterator)
-        print("\nDINNER")
-        self.__print_menu(cafe_menu_iterator)
+        for menu in self.menus:
+            iterator = menu.create_iterator()
+            print(f"\n{menu.get_name()}\n----")
+            self.__print_menu(iterator)
 
     def __print_menu(self, iterator):
         while iterator.has_next():
@@ -245,7 +191,8 @@ if __name__ == "__main__":
     pancake_house_menu = PancakeHouseMenu()
     diner_menu = DinerMenu()
     cafe_menu = CafeMenu()
-    waitress = Waitress(pancake_house_menu, diner_menu, cafe_menu)
+
+    waitress = Waitress([pancake_house_menu, diner_menu, cafe_menu])
     waitress.print_menu()
 
     pancake_house_menu.remove_item("Waffles")
