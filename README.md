@@ -98,3 +98,14 @@ Patterns | Description
 Template Method | Defines the skeleton of an algorithm in a method, deferring some steps to subclasses. Template Method lets subclasses redefine certain steps of an algorithm without changing the algorithm’s structure.
 Strategy | Defines a family of algorithms, encapsulates each one, and makes them interchangeable. Strategy lets the algorithm vary independently from clients that use it.
 Factory Method | Defines an interface for creating an object, but let subclasses decide which class to instantiate. Factory Method lets a class defer instantiation to the subclasses.
+
+Iterator and Composite Pattern
+-----------------
+
+![Iterator Pattern](./Images/9_itterator_and_composite_pattern.png)
+
+Iterator - provides a way to access the elements of an aggregate object sequentially without exposing its underlying representation.
+
+Design Principle: A Class should have only one reason to change.
+
+Cohesion - is a term that is used to indicate how focused and single-minded a class is. A class with high cohesion has a single purpose or responsibility and the class is well-focused on that purpose. A class with low cohesion has many purposes or responsibilities and is not focused on just one purpose.
