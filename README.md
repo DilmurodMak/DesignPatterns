@@ -9,6 +9,7 @@
 - [Adapter and Facade Pattern](#adapter-and-facade-pattern)
 - [Template Method Pattern](#template-method-pattern)
 - [Iterator and Composite Pattern](#iterator-and-composite-pattern)
+- [State Pattern](#state-pattern)
 
 Strategy Pattern
 ----------------
@@ -139,3 +140,19 @@ Design Principle: A Class should have only one reason to change.
 Cohesion - is a term that is used to indicate how focused and single-minded a class is. A class with high cohesion has a single purpose or responsibility and the class is well-focused on that purpose. A class with low cohesion has many purposes or responsibilities and is not focused on just one purpose.
 
 [Restaurant Menu Code Sample](./9.%20Itterator%20and%20Composite%20Pattern/itterator.py)
+
+State Pattern
+-----------------
+
+![State Pattern](./Images/10_state_pattern.png)
+![State Pattern](./Images/10_state_pattern_b.png)
+
+State - allows an object to alter its behavior when its internal state changes. The object will appear to change its class.
+
+Pattern | Description
+--- | ---
+State | Encapsulates state-based behavior and delegate behavior to the current state object.
+Strategy | Encapsulate interchangeable behaviors and use delegation to decide which behavior to use.
+Template Method | Subclasses decide how to implement steps in an algorithm.
+
+[Gumball Machine Code Sample](./10.%20State%20Pattern/main.py)
