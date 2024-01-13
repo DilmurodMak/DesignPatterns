@@ -75,16 +75,41 @@ class SoldState(State):
     def dispense(self):
         gumball_machine.release_ball()
 
-        # 10% chance to dispense an additional gumball
-        if random.random() < 0.1 and gumball_machine.get_count() > 0:
-            print("Congratulations! You got an extra gumball for free!")
-            gumball_machine.release_ball()
-
         if gumball_machine.get_count() > 0:
-            gumball_machine.set_state(gumball_machine.get_no_coin_state())
+            # Introduce the WinnerState with a 10% chance
+            if random.random() < 0.1:
+                gumball_machine.set_state(gumball_machine.get_winner_state())
+            else:
+                gumball_machine.set_state(gumball_machine.get_no_coin_state())
         else:
             print("Oops, out of gumballs!")
             gumball_machine.set_state(gumball_machine.get_sold_out_state())
+
+
+class WinnerState(State):
+    def insert_coin(self):
+        print("Please wait, we're already giving you a gumball.")
+
+    def eject_coin(self):
+        print("Sorry, you already turned the crank.")
+
+    def turn_crank(self):
+        print("Turning twice doesn't get you another gumball!")
+
+    def dispense(self):
+        print(
+            "Congratulations! You're a winner! You get two gumballs for the price of one."
+        )
+        gumball_machine.release_ball()
+        if gumball_machine.get_count() == 0:
+            gumball_machine.set_state(gumball_machine.get_sold_out_state())
+        else:
+            gumball_machine.release_ball()
+            if gumball_machine.get_count() > 0:
+                gumball_machine.set_state(gumball_machine.get_no_coin_state())
+            else:
+                print("Oops, out of gumballs!")
+                gumball_machine.set_state(gumball_machine.get_sold_out_state())
 
 
 # Context class
@@ -95,6 +120,7 @@ class GumballMachine:
         self.no_coin_state = NoCoinState()
         self.has_coin_state = HasCoinState()
         self.sold_state = SoldState()
+        self.winner_state = WinnerState()
         self.state = self.no_coin_state
 
     def set_state(self, state):
@@ -111,6 +137,9 @@ class GumballMachine:
 
     def get_sold_state(self):
         return self.sold_state
+ 
+    def get_winner_state(self):
+        return self.winner_state
 
     def insert_coin(self):
         self.state.insert_coin()
