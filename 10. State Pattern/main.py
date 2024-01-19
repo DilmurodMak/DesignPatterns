@@ -1,7 +1,36 @@
 import random
 
 
-class GumballMachine:
+class GumBallMachineInterface:
+    def insert_coin(self):
+        pass
+
+    def eject_coin(self):
+        pass
+
+    def turn_crank(self):
+        pass
+
+    def release_ball(self):
+        pass
+
+    def refill(self, count):
+        pass
+
+    def get_count(self):
+        pass
+
+    def get_state(self):
+        pass
+
+    def get_location(self):
+        pass
+
+    def __str__(self):
+        pass
+
+
+class GumballMachine(GumBallMachineInterface):
     def __init__(self, location, count):
         self.location = location
         self.count = count
@@ -178,8 +207,7 @@ class GumballMonitor:
         print(f"Current State: {self.gumball_machine_proxy.get_state()}")
 
 
-# Proxy class
-class GumballMachineProxy:
+class GumballMachineProxy(GumBallMachineInterface):
     def __init__(self, gumball_machine):
         self.gumball_machine = gumball_machine
 
