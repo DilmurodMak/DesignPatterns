@@ -9,7 +9,7 @@
 - [Adapter and Facade Pattern](#adapter-and-facade-pattern)
 - [Template Method Pattern](#template-method-pattern)
 - [Iterator and Composite Pattern](#iterator-and-composite-pattern)
-- [State Pattern](#state-pattern)
+- [State Pattern / Proxy Pattern](#state-pattern--proxy-pattern)
 
 Strategy Pattern
 ----------------
@@ -141,13 +141,16 @@ Cohesion - is a term that is used to indicate how focused and single-minded a cl
 
 [Restaurant Menu Code Sample](./9.%20Itterator%20and%20Composite%20Pattern/itterator.py)
 
-State Pattern
+State Pattern / Proxy Pattern
 -----------------
 
 ![State Pattern](./Images/10_state_pattern.png)
 ![State Pattern](./Images/10_state_pattern_b.png)
+![Proxy Pattern](./Images/10_proxy_pattern.png)
 
 State - allows an object to alter its behavior when its internal state changes. The object will appear to change its class.
+
+Proxy - provides a surrogate or placeholder for another object to control access to it.
 
 Pattern | Description
 --- | ---
