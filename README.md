@@ -10,6 +10,7 @@
 - [Template Method Pattern](#template-method-pattern)
 - [Iterator and Composite Pattern](#iterator-and-composite-pattern)
 - [State Pattern / Proxy Pattern](#state-pattern--proxy-pattern)
+- [Compound Pattern](#compound-pattern)
 
 Strategy Pattern
 ----------------
@@ -159,3 +160,10 @@ Strategy | Encapsulate interchangeable behaviors and use delegation to decide wh
 Template Method | Subclasses decide how to implement steps in an algorithm.
 
 [Gumball Machine Code Sample](./10.%20State%20Pattern/main.py)
+
+Compound Pattern
+-----------------
+
+![Compound Pattern](./Images/11_compound_pattern.png)
+
+Compound - is a pattern that combines two or more patterns into a solution that solves a recurring or general problem. MVC is an example for compound pattern
