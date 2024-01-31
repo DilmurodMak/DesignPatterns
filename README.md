@@ -11,6 +11,9 @@
 - [Iterator and Composite Pattern](#iterator-and-composite-pattern)
 - [State Pattern / Proxy Pattern](#state-pattern--proxy-pattern)
 - [Compound Pattern](#compound-pattern)
+- [Patterns in the Real World](#patterns-in-the-real-world)
+  - [Pattern Categories](#pattern-categories)
+  - [Classification of Patterns](#classification-of-patterns)
 
 Strategy Pattern
 ----------------
@@ -167,3 +170,45 @@ Compound Pattern
 ![Compound Pattern](./Images/11_compound_pattern.png)
 
 Compound - is a pattern that combines two or more patterns into a solution that solves a recurring or general problem. MVC is an example for compound pattern
+
+[ Duck Simulator Code Sample](./11.%20Compound%20Pattern/main.py)
+
+Patterns in the Real World
+-----------------
+
+![documenting patterns](./Images/12_documenting_patterns.png)
+
+### Pattern Categories
+
+- Creational Patterns
+  - Abstract Factory
+  - Factory Method
+  - Singleton
+
+- Structural Patterns
+  - Adapter
+  - Composite
+  - Decorator
+  - Facade
+  - Proxy
+
+- Behavioral Patterns
+  - Command
+  - Interpreter
+  - Iterator
+  - Observer
+  - State
+  - Strategy
+
+### Classification of Patterns
+
+Class Patterns:
+- Class patterns deal with relationships between classes and their subclasses. These relationships are established through inheritance, so they are static—fixed at compile-time.
+
+Template Method, Factory Method, and Interpreter are class patterns.
+
+
+Object Patterns:
+- describe relationships between objects and are primarily defined by composition. Relationships in object patterns are typically created at runtime and are more dynamic and flexible.
+
+Adapter, Itterator, Decorator, Composite, State, Proxy, Facade, Command, Abstract Factory, Strategy, Singlton, and Observer are object patterns.
